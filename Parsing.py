@@ -5,15 +5,16 @@ import Movies
 # loading data
 class Parse:
 
+    movies_info = []
+
     def __init__(self, path):
         self.path = path
 
     # Funtion for getting and parsing data from csv file
-    def get_data(self):
+    def parse_data(self):
         with open(self.path, encoding='utf-8') as csv_file:
             workbook = csv.reader(csv_file)
             next(workbook)
-            movies_info = []
             for row in workbook:
                 idd = row[0]
                 typee = row[1]
@@ -26,12 +27,11 @@ class Parse:
                 runtime = row[4]
                 genre = row[5]
 
-                row[6] if row[6] == '\\N' else row[6]
                 rating = row[6]
-
-                row[6] if row[6] == '\\N' else row[6]
                 votes = row[7]
 
                 movie_object = Movies.Movies(idd, typee, title, year, runtime, genre, rating, votes)
-                movies_info.append(movie_object)
-        return movies_info
+                self.movies_info.append(movie_object)
+
+    def get_movies_info(self):
+        return self.movies_info
